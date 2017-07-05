@@ -28,7 +28,7 @@ def run_game():
 	# main game loop
 	while True:
 		# look for events
-		functions.check_events(settings, player, objects)
+		functions.check_events(settings, player, objects, inventory)
 		# update object info
 		player.update()
 		# update/redraw screen

@@ -14,6 +14,10 @@ class Object():
 	def draw_object(self):
 		"""draw player at current location"""
 		self.screen.blit(self.image, self.rect)
+	
+	def move_object(self, x, y):
+		self.rect.x = x
+		self.rect.y = y
 
 
 class Rock(Object):
@@ -21,7 +25,7 @@ class Rock(Object):
 	def __init__(self, settings, screen, map, x, y):
 		super().__init__(settings, screen, map, x, y)
 		self.image_path = "images/rock.png"
-		self.scale = (30, 30)
+		self.scale = (50, 50)
 		self.map_rect = map.rect
 		
 		# load object image, get rect
@@ -42,7 +46,7 @@ class House(Object):
 	def __init__(self, settings, screen, map, x, y):
 		super().__init__(settings, screen, map, x, y)
 		self.image_path = "images/house.png"
-		self.scale = (55, 55)
+		self.scale = (70, 70)
 		self.map_rect = map.rect
 		
 		# load object image, get rect

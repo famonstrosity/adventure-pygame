@@ -1,5 +1,7 @@
 import pygame
 
+from objects import Object, Rock
+
 class Inventory():
 
 	def __init__(self, settings, screen):
@@ -18,7 +20,18 @@ class Inventory():
 		
 		# make inventory rect
 		self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+		
+		# track number of objects in inventory
+		self.numobjects = 0
 
 	def draw_inventory(self):
 		# draw inventory
 		self.screen.fill(self.inventory_color, self.rect)
+	
+	def has_object(self):
+		# return true if has objects in inventory
+		if self.numobjects == 0:
+			return False
+		else:
+			return True
+			

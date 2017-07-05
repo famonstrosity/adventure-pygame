@@ -7,18 +7,18 @@ from player import Player
 
 mode = 1 #initialize in map mode
 
-def check_events(settings, player, objects):
+def check_events(settings, player, objects, inventory):
 	"""respond to keypress and mouse events"""
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			sys.exit()
 		elif event.type == pygame.KEYDOWN:
-			check_keydown(event, settings, player, objects)
+			check_keydown(event, settings, player, objects, inventory)
 		elif event.type == pygame.KEYUP:
 			check_keyup(event, settings, player)
 
 
-def check_keydown(event, settings, player, objects):
+def check_keydown(event, settings, player, objects, inventory):
 	"""respond to keydown events"""
 	if settings.mode == 1: #map
 		if event.key == pygame.K_q:
@@ -28,7 +28,7 @@ def check_keydown(event, settings, player, objects):
 			mode = 3
 		elif event.key == pygame.K_RETURN:
 			#interact with object if player rect collides w object rect
-			check_interactions(player, objects)
+			check_interactions(player, objects, inventory)
 			#text mode
 			mode = 2
 		elif event.key == pygame.K_UP:
@@ -79,23 +79,29 @@ def check_keyup(event, settings, player):
 def update_screen(settings, screen, map, player, objects, text_box, inventory):
 	screen.fill((0, 0, 0))
 	map.draw_map()
+	inventory.draw_inventory()
+	text_box.draw_text_box()
 	for object in objects:
 		object.draw_object()
 	player.draw_player()
-	inventory.draw_inventory()
-	text_box.draw_text_box()
+
 	pygame.display.flip()
 
 def get_mode():
 	return settings.mode
 	
-def check_interactions(player, objects):
+def check_interactions(player, objects, inventory):
 	for object in objects:
 		if player.rect.colliderect(object.rect) == True:
 			if object.can_take == True:
-				# pick up the object
+				# pick up an object
 				print("pick up object")
+				object.move_object(50+(inventory.numobjects*50), 350)
+				inventory.numobjects += 1
 			else:
-				# put down the object
-				print("put down object")
+				# put down an object on a location
+				if inventory.numobjects > 0:
+					print("put down object")
+					#objects.remove(object)
+				
 				
